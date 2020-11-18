@@ -1,24 +1,18 @@
 import React from 'react';
 import { View, Text, Button, StyleSheet, TouchableOpacity, Image } from 'react-native';
-
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
-
 import FormInput from '../components/FormInput';
 import FormButton from '../components/FormButton';
 import SocialButton from '../components/SocialButton';
 import { useState } from 'react';
 
 
-const LoginScreen = ({navigation}) => {
+const SignupScreen = ({navigation}) => {
     const [email,setEmail] = useState();
     const [password,setPassword]  = useState();
+    const [confirmPassword,setConfirmPassword]  = useState();
     return (
         <View style={ styles.container}>
-            <Image
-                source={require('../assets/onboarding-img3.jpg')}
-                style={styles.logo}
-            />
-            <Text style={styles.text}>Social App</Text>
+            <Text style={styles.text}>Create Account</Text>
             <FormInput
                 labelValue={email}
                 onChangeText={(userEmail) => setEmail(userEmail)}
@@ -35,13 +29,21 @@ const LoginScreen = ({navigation}) => {
                 iconType="lock"
                 secureTextEntry={true}
             />
-            <FormButton
-                buttonTitle="Sign in"
-                onPress={()=>alert("Sing in clicked")}
+            <FormInput
+                labelValue={confrimPassword}
+                onChangeText={(userPassword) => setPassword(userPassword)}
+                placeholderText="Confrim Password"
+                iconType="lock"
+                secureTextEntry={true}
             />
-            <TouchableOpacity style={styles.forgotButton} onPress={()=> {}}>
-                <Text style={styles.navButtonText}>Forgot Password?</Text>
-            </TouchableOpacity>
+            <FormButton
+                buttonTitle="Sign up"
+                onPress={()=>alert("Sing up clicked")}
+            />
+            <View style={styles.textPrivate}>
+                <Text style={styles.colorTextPrivate}>By registering, you confirm that you accept to our</Text>
+                <TouchableOpacity onPress={()=>alert('Soul sold!')}><Text style={[styles.colorTextPrivate,{color: '#e88832'}]}>Terms of Serivce</Text></TouchableOpacity>
+            </View>
             <SocialButton
                 buttonTitle="Sign in with Goolge"
                 btnType="google"
@@ -49,26 +51,21 @@ const LoginScreen = ({navigation}) => {
                 backgroundColor="#f5e7ea"
                 onPress={()=>{}}
             />
-            <TouchableOpacity style={styles.forgotButton} onPress={()=> {navigation.navigate("Signup")}}>
-                <Text style={styles.navButtonText}>Dont have an account? Click Here</Text>
+            <TouchableOpacity style={styles.forgotButton} onPress={()=> {navigation.navigate("Login")}}>
+                <Text style={styles.navButtonText}>Have an account? Sign in</Text>
             </TouchableOpacity>
         </View>
 
     );
 };
 
-export default LoginScreen;
+export default SignupScreen;
 
 const styles = StyleSheet.create({
     container:{
         flex:1,
         alignItems: "center",
         justifyContent: "center"
-    },
-    logo:{
-        height: 150,
-        width: 150,
-        resizeMode: 'cover',
     },
     text:{
         fontSize: 20,
@@ -79,14 +76,22 @@ const styles = StyleSheet.create({
     navButton:{
         marginTop: 15,
     },
-    forgotButton:{
-        marginVertical: 35,
-    },
     navButtonText:{
         fontSize: 18,
         fontWeight: '500',
         color: '#2e64e5',
         
 
+    },
+    colorTextPrivate:{
+        fontSize: 13,
+        fontWeight: '400',
+        color:"grey"
+    },
+    textPrivate:{
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        marginVertical: 35,
+        justifyContent: "center"
     }
 });

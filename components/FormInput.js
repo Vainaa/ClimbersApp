@@ -7,12 +7,13 @@ import { windowHeigth, windowWidth } from '../utils/Dimensions';
 const FormInput = ({labelValue, placeholderText, iconType, ...rest}) => {
     return (
             <View style={styles.inputContainer}>
-                <View>
+                <View style={styles.iconStyle}>
                     <AntDesign name={iconType} size={25} color ="#666"/>
                 </View>
                 
                 <TextInput
                     name={labelValue}
+                    style={styles.input}
                     numberOfLines={1}
                     placeholder={placeholderText}
                     placeholderTextColor="#666"
