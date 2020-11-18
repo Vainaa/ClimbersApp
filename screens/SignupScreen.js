@@ -30,7 +30,7 @@ const SignupScreen = ({navigation}) => {
                 secureTextEntry={true}
             />
             <FormInput
-                labelValue={confrimPassword}
+                labelValue={confirmPassword}
                 onChangeText={(userPassword) => setPassword(userPassword)}
                 placeholderText="Confrim Password"
                 iconType="lock"
@@ -44,13 +44,6 @@ const SignupScreen = ({navigation}) => {
                 <Text style={styles.colorTextPrivate}>By registering, you confirm that you accept to our</Text>
                 <TouchableOpacity onPress={()=>alert('Soul sold!')}><Text style={[styles.colorTextPrivate,{color: '#e88832'}]}>Terms of Serivce</Text></TouchableOpacity>
             </View>
-            <SocialButton
-                buttonTitle="Sign in with Goolge"
-                btnType="google"
-                color="#de4d41"
-                backgroundColor="#f5e7ea"
-                onPress={()=>{}}
-            />
             <TouchableOpacity style={styles.forgotButton} onPress={()=> {navigation.navigate("Login")}}>
                 <Text style={styles.navButtonText}>Have an account? Sign in</Text>
             </TouchableOpacity>

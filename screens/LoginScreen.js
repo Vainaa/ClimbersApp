@@ -39,16 +39,19 @@ const LoginScreen = ({navigation}) => {
                 buttonTitle="Sign in"
                 onPress={()=>alert("Sing in clicked")}
             />
+
             <TouchableOpacity style={styles.forgotButton} onPress={()=> {}}>
                 <Text style={styles.navButtonText}>Forgot Password?</Text>
             </TouchableOpacity>
+            <View>
             <SocialButton
-                buttonTitle="Sign in with Goolge"
+                buttonTitle="Sign in with Google"
                 btnType="google"
                 color="#de4d41"
                 backgroundColor="#f5e7ea"
                 onPress={()=>{}}
-            />
+            /> 
+            </View>
             <TouchableOpacity style={styles.forgotButton} onPress={()=> {navigation.navigate("Signup")}}>
                 <Text style={styles.navButtonText}>Dont have an account? Click Here</Text>
             </TouchableOpacity>
