@@ -1,13 +1,18 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import FormButton from '../components/FormButton';
+import { AuthContext } from '../navigation/AuthProvider';
+
 
 const HomeScreen=()=> {
+
+    const {user, logout} = useContext(AuthContext);
+
     return (
-        <View style={syles.container}>
-            <Text style={styles.text}>Welcome</Text>
+        <View style={styles.container}>
+            <Text style={styles.text}>Welcome {user.uid}</Text>
             <FormButton
-                buttonTitle="Logout" onPress={()=> navigator.navigate("Login")}
+                buttonTitle="Logout" onPress={()=> logout()}
             />
         </View>
     );

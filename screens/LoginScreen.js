@@ -1,17 +1,20 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { View, Text, Button, StyleSheet, TouchableOpacity, Image } from 'react-native';
-
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 import FormInput from '../components/FormInput';
 import FormButton from '../components/FormButton';
-import SocialButton from '../components/SocialButton';
 import { useState } from 'react';
-
+import { AuthContext } from '../navigation/AuthProvider';
+import {
+    GoogleSignin,
+    GoogleSigninButton,
+    statusCodes
+} from '@react-native-community/google-signin';
 
 const LoginScreen = ({navigation}) => {
     const [email,setEmail] = useState();
     const [password,setPassword]  = useState();
+    const {login, googleLogin} = useContext(AuthContext);
     return (
         <View style={ styles.container}>
             <Image
@@ -37,19 +40,19 @@ const LoginScreen = ({navigation}) => {
             />
             <FormButton
                 buttonTitle="Sign in"
-                onPress={()=>alert("Sing in clicked")}
+                onPress={()=>login(email,password)}
             />
 
             <TouchableOpacity style={styles.forgotButton} onPress={()=> {}}>
                 <Text style={styles.navButtonText}>Forgot Password?</Text>
             </TouchableOpacity>
             <View>
-            <SocialButton
-                buttonTitle="Sign in with Google"
-                btnType="google"
-                color="#de4d41"
-                backgroundColor="#f5e7ea"
-                onPress={()=>{}}
+                
+            <GoogleSigninButton
+                style={{ width: 192, height: 48 }}
+                size={GoogleSigninButton.Size.Wide}
+                color={GoogleSigninButton.Color.Light}
+                onPress={()=>googleLogin()}
             /> 
             </View>
             <TouchableOpacity style={styles.forgotButton} onPress={()=> {navigation.navigate("Signup")}}>

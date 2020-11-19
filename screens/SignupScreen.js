@@ -1,15 +1,16 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import { View, Text, Button, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import FormInput from '../components/FormInput';
 import FormButton from '../components/FormButton';
-import SocialButton from '../components/SocialButton';
-import { useState } from 'react';
+import { AuthContext } from '../navigation/AuthProvider';
 
 
 const SignupScreen = ({navigation}) => {
     const [email,setEmail] = useState();
     const [password,setPassword]  = useState();
-    const [confirmPassword,setConfirmPassword]  = useState();
+
+    const {register} = useContext(AuthContext);
+
     return (
         <View style={ styles.container}>
             <Text style={styles.text}>Create Account</Text>
@@ -29,16 +30,9 @@ const SignupScreen = ({navigation}) => {
                 iconType="lock"
                 secureTextEntry={true}
             />
-            <FormInput
-                labelValue={confirmPassword}
-                onChangeText={(userPassword) => setPassword(userPassword)}
-                placeholderText="Confrim Password"
-                iconType="lock"
-                secureTextEntry={true}
-            />
             <FormButton
                 buttonTitle="Sign up"
-                onPress={()=>alert("Sing up clicked")}
+                onPress={( )=> register(email, password)}
             />
             <View style={styles.textPrivate}>
                 <Text style={styles.colorTextPrivate}>By registering, you confirm that you accept to our</Text>
