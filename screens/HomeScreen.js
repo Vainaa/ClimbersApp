@@ -12,6 +12,9 @@ const HomeScreen=()=> {
         <View style={styles.container}>
             <Text style={styles.text}>Welcome {user.uid}</Text>
             <FormButton
+                buttonTitle="Locations" onPress={()=> navigator.navigate('Locations')}
+            />
+            <FormButton
                 buttonTitle="Logout" onPress={()=> logout()}
             />
         </View>
