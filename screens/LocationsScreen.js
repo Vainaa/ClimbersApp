@@ -1,16 +1,16 @@
-import React from 'react';
+import React, { Component } from "react";
 import {
-    AppRegistry,
-    StyleSheet,
-    Text,
-    View,
-    ScrollView,
-    Animated,
-    Image,
-    Dimensions
-} from 'react-native';
-import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
-import CreateMarker from '../screens/CreateMarker';
+  StyleSheet,
+  Text,
+  View,
+  ScrollView,
+  Animated,
+  Image,
+  Dimensions,
+  TouchableOpacity,
+} from "react-native";
+
+import MapView, {PROVIDER_GOOGLE, animateToRegion} from "react-native-maps";;
 
 
 const {width, height} = Dimensions.get("window");
@@ -27,17 +27,21 @@ const Images = [
 ]
 
 
-export default class LocationsScreen extends React.Component{
+
+export default class LocationsScreen extends Component{
+       
+   
+    
     state={
         markers: [
             {
                 coordinate:{
-                    latitude:60.169345,
-                    longitude:24.933520,
+                    latitude:60.166005, 
+                    longitude:24.702590,
                     
                 },
-                title: "Kamppi",
-                description:"Kampin kiipeilykeidas",
+                title: "Espoo",
+                description:"Boulderkeskus Espoo",
                 image: Images[0],//IMAGE HERE
                     
                 },
@@ -78,72 +82,68 @@ export default class LocationsScreen extends React.Component{
             region:{
                 latitude: 60.1733244,
                 longitude: 24.9410248,
-                latitudeDelta: 0.04864195044303443,
-                longitudeDelta: 0.040142817690068,
+                latitudeDelta: 0.05864195044303443,
+                longitudeDelta: 0.050142817690068,
             },  
         };
-    UNSAFE_componentWillMount(){
-        this.index=0;
-        this.animation=new Animated.Value(0);
-    }
-    UNSAFE_componentDidMount() {
-        // We should detect when scrolling has stopped then animate
-        // We should just debounce the event listener here
-        this.animation.addListener(({ value }) => {
-          let index = Math.floor(value / CARD_WIDTH + 0.3); // animate 30% away from landing on the next item
-          if (index >= this.state.markers.length) {
-            index = this.state.markers.length - 1;
-          }
-          if (index <= 0) {
-            index = 0;
-          }
-    
-          clearTimeout(this.regionTimeout);
-          this.regionTimeout = setTimeout(() => {
-            if (this.index !== index) {
-              this.index = index;
-              const { coordinate } = this.state.markers[index];
-              this.map.animateToRegion(
-                {
-                  ...coordinate,
-                  latitudeDelta: this.state.region.latitudeDelta,
-                  longitudeDelta: this.state.region.longitudeDelta,
-                },
-                350
-              );
-            }
-          }, 10);
-        });
-      }
-    
 
-    
-    render(){
-        
-        const interpolations = this.state.markers.map((marker,index)=>{
+        render() {
+          this.index = 0;
+          this.animation = new Animated.Value(0);
+          this.animation.addListener(({ value }) => {
+            let index = Math.floor(value / CARD_WIDTH + 0.3); // animate 30% away from landing on the next item
+            if (index >= this.state.markers.length) {
+              index = this.state.markers.length - 1;
+            }
+            if (index <= 0) {
+              index = 0;
+            }
+      
+            clearTimeout(this.regionTimeout);
+            this.regionTimeout = setTimeout(() => {
+              if (this.index !== index) {
+                this.index = index;
+                const { coordinate } = this.state.markers[index];
+                this.map.animateToRegion(
+                  {
+                    ...coordinate,
+                    latitudeDelta: this.state.region.latitudeDelta,
+                    longitudeDelta: this.state.region.longitudeDelta,
+                  },
+                  350
+                );
+              }
+            }, 10);
+          });
+          const interpolations = this.state.markers.map((marker, index) => {
             const inputRange = [
-                (index - 1) * CARD_WIDTH,
-                index * CARD_WIDTH,
-                ((index + 1) * CARD_WIDTH),
+              (index - 1) * CARD_WIDTH,
+              index * CARD_WIDTH,
+              ((index + 1) * CARD_WIDTH),
             ];
             const scale = this.animation.interpolate({
-                inputRange,
-                outputRange: [1, 2.5, 1],
-                extrapolate: "clamp",
+              inputRange,
+              outputRange: [1, 2.5, 1],
+              extrapolate: "clamp",
             });
             const opacity = this.animation.interpolate({
-                inputRange,
-                outputRange: [0.35, 1, 0.35],
-                extrapolate: "clamp",
+              inputRange,
+              outputRange: [0.35, 1, 0.35],
+              extrapolate: "clamp",
             });
-            return {scale, opacity};    
-        });
-        return (
+            return { scale, opacity };
+          });
+      
+          return (
             <View style={styles.container}>
-              <MapView
+              <MapView.Animated
                 ref={map => this.map = map}
                 initialRegion={this.state.region}
                 style={styles.container}
+                showsUserLocation
+                provider={PROVIDER_GOOGLE}
+
+               
               >
                 {this.state.markers.map((marker, index) => {
                   const scaleStyle = {
@@ -165,7 +165,7 @@ export default class LocationsScreen extends React.Component{
                     </MapView.Marker>
                   );
                 })}
-              </MapView>
+              </MapView.Animated>
               <Animated.ScrollView
                 horizontal
                 scrollEventThrottle={1}
@@ -187,7 +187,8 @@ export default class LocationsScreen extends React.Component{
                 contentContainerStyle={styles.endPadding}
               >
                 {this.state.markers.map((marker, index) => (
-                  <View style={styles.card} key={index}>
+                  <TouchableOpacity style={styles.card} key={index}
+                  >
                     <Image
                       source={marker.image}
                       style={styles.cardImage}
@@ -199,79 +200,76 @@ export default class LocationsScreen extends React.Component{
                         {marker.description}
                       </Text>
                     </View>
-                  </View>
+                  </TouchableOpacity>
                 ))}
               </Animated.ScrollView>
             </View>
           );
-    }
-
-}
-
-const styles = StyleSheet.create ({
-    container:{
-        flex:1
-    },
-    scrollView:{
-        position: "absolute",
-        bottom: 30,
-        left: 0,
-        right: 0,
-        paddingVertical: 10,
-
-    },
-    endPadding:{
-        paddingRight: width- CARD_WIDTH,
-    },
-    card:{
-        padding: 10,
-        elevation: 2,
-        backgroundColor: "#fff",
-        marginHorizontal: 10,
-        shadowColor: "#000",
-        shadowRadius: 5,
-        shadowOpacity: 0.3,
-        shadowOffset: {x:2, y:-2},
-        height: CARD_HEIGHT,
-        width:CARD_HEIGHT,
-        overflow:"hidden"
-    },
-    cardImage:{
-        flex:3,
-        width:"100%",
-        height: "100%",
-        alignSelf: "center"
-    },
-    textContent:{
-        flex: 1
-    },
-    cardTitle:{
-        fontSize: 13,
-        marginTop: 5,
-        fontWeight:"bold"
-    },
-    cardDescritpion:{
-        fontSize: 12,
-        color:"#444"
-    },
-    markerWrap:{
-        alignItems:"center",
-        justifyContent:"center"
-    },
-    marker:{
-        width: 16,
-        height: 16,
-        borderRadius: 8,
-        backgroundColor: "rgba(130,4,150, 0.9)",
-
-    },
-    ring:{
-        width: 36,
-        height: 36,
-        borderRadius: 18,
-        backgroundColor: "rgba(130,4,150, 0.3)",
-        position:"absolute",
-        borderWidth: 1,
-        borderColor: "rgba(130,4,150, 0.5)"
-    }
-});
+        }
+      }
+      
+      const styles = StyleSheet.create({
+        container: {
+          flex: 1,
+        },
+        scrollView: {
+          position: "absolute",
+          bottom: 30,
+          left: 0,
+          right: 0,
+          paddingVertical: 10,
+        },
+        endPadding: {
+          paddingRight: width - CARD_WIDTH,
+        },
+        card: {
+          padding: 10,
+          elevation: 2,
+          backgroundColor: "#FFF",
+          marginHorizontal: 10,
+          shadowColor: "#000",
+          shadowRadius: 5,
+          shadowOpacity: 0.3,
+          shadowOffset: { x: 2, y: -2 },
+          height: CARD_HEIGHT,
+          width: CARD_WIDTH,
+          overflow: "hidden",
+        },
+        cardImage: {
+          flex: 3,
+          width: "100%",
+          height: "100%",
+          alignSelf: "center",
+        },
+        textContent: {
+          flex: 1,
+        },
+        cardtitle: {
+          fontSize: 12,
+          marginTop: 5,
+          fontWeight: "bold",
+        },
+        cardDescription: {
+          fontSize: 12,
+          color: "#444",
+        },
+        markerWrap: {
+          alignItems: "center",
+          justifyContent: "center",
+        },
+        marker: {
+          width: 8,
+          height: 8,
+          borderRadius: 4,
+          backgroundColor: "rgba(130,4,150, 0.9)",
+        },
+        ring: {
+          width: 24,
+          height: 24,
+          borderRadius: 12,
+          backgroundColor: "rgba(130,4,150, 0.3)",
+          position: "absolute",
+          borderWidth: 1,
+          borderColor: "rgba(130,4,150, 0.5)",
+        },
+      });
