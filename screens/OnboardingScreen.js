@@ -12,14 +12,14 @@ const OnboardingScreen = ({navigation}) => {
         pages={[
             {
                 backgroundColor: "#fff",
-                image: <Image source={require('../assets/onboarding-img1.jpg')}/>,
+                image: <Image source={require('../assets/onboarding-img1.png') }style={styles.logo}/>,
                 title: "Onboarding 1",
                 subtitle: "Use this app to find climbing gyms near you",
             },
 
             {
                 backgroundColor: "#fff",
-                image: <Image source={require('../assets/onboarding-img3.jpg')}/>,
+                image: <Image source={require('../assets/onboarding-img3.png')}/>,
                 title: "Onboarding 3",
                 subtitle: "Placeholder text goes here"
             },
@@ -37,4 +37,9 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center"
     },
+    logo:{
+        height: 150,
+        width: 150,
+        resizeMode: 'cover',
+    }
 });

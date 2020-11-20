@@ -30,6 +30,7 @@ const SignupScreen = ({navigation}) => {
                 iconType="lock"
                 secureTextEntry={true}
             />
+            <Text style={styles.textPrivate, {marginVertical: 0, marginBottom: 35}}>Password must be atleast six(6) characters</Text>
             <FormButton
                 buttonTitle="Sign up"
                 onPress={( )=> register(email, password)}

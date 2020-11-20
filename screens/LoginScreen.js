@@ -18,7 +18,7 @@ const LoginScreen = ({navigation}) => {
     return (
         <View style={ styles.container}>
             <Image
-                source={require('../assets/onboarding-img3.jpg')}
+                source={require('../assets/onboarding-img3.png')}
                 style={styles.logo}
             />
             <Text style={styles.text}>Climbing App</Text>
