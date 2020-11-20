@@ -18,7 +18,7 @@ import com.airbnb.android.react.maps.MapsPackage;
 
 
 public class MainApplication extends Application implements ReactApplication {
-
+  
   private final ReactNativeHost mReactNativeHost =
       new ReactNativeHost(this) {
         @Override

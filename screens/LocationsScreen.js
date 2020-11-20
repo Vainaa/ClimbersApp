@@ -47,8 +47,8 @@ export default class LocationsScreen extends Component{
                 },
                 {
                 coordinate:{
-                    latitude:60.18583259, 
-                    longitude:24.972829442,
+                    latitude:60.18683259, 
+                    longitude:24.978029442,
                 
                 },
                 title: "Kalasatama",
@@ -58,7 +58,7 @@ export default class LocationsScreen extends Component{
                 },  
                 {
                     coordinate:{
-                    latitude:60.1588710312, 
+                    latitude:60.1608710312, 
                     longitude:24.9029297216,
                     
                 },
@@ -69,8 +69,8 @@ export default class LocationsScreen extends Component{
                 },  
                 {
                     coordinate:{
-                    latitude:60.190332572, 
-                    longitude:25.025166566,
+                    latitude:60.203845, 
+                    longitude:25.047602,
                     
                 },
                 title: "Herttoniemi",
@@ -80,8 +80,8 @@ export default class LocationsScreen extends Component{
                 },  
             ],     
             region:{
-                latitude: 60.1733244,
-                longitude: 24.9410248,
+                latitude:60.166005, 
+                longitude:24.702590,
                 latitudeDelta: 0.05864195044303443,
                 longitudeDelta: 0.050142817690068,
             },  
@@ -258,15 +258,15 @@ export default class LocationsScreen extends Component{
           justifyContent: "center",
         },
         marker: {
-          width: 8,
-          height: 8,
-          borderRadius: 4,
+          width: 16,
+          height: 16,
+          borderRadius: 8,
           backgroundColor: "rgba(130,4,150, 0.9)",
         },
         ring: {
-          width: 24,
-          height: 24,
-          borderRadius: 12,
+          width: 48,
+          height: 48,
+          borderRadius: 24,
           backgroundColor: "rgba(130,4,150, 0.3)",
           position: "absolute",
           borderWidth: 1,

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import {View} from 'react-native';
 import SignupScreen from '../screens/SignupScreen';
 import LoginScreen from '../screens/LoginScreen';
+import SplashScreen from '../screens/SplashScreen';
 import OnboardingScreen from '../screens/OnboardingScreen';
 import LocationsScreen from '../screens/LocationsScreen';
 import HomeScreen from '../screens/HomeScreen';
@@ -43,11 +44,12 @@ const AuthStack = () => {
       } else if (isFirstLaunch == true) {
         routeName = 'Onboarding';
       } else {
-        routeName = 'Login';
+        routeName = 'Splash';
       }
 
       return (
         <Stack.Navigator initialRouteName={routeName}>
+          <Stack.Screen name="Splash" component={SplashScreen} options={{headerShown: false}}/>
           <Stack.Screen
             name="Onboarding"
             component={OnboardingScreen}
@@ -61,25 +63,7 @@ const AuthStack = () => {
           <Stack.Screen
             name="Login"
             component={LoginScreen}
-            options={({navigation}) => ({
-                title: '',
-                headerStyle: {
-                  backgroundColor: '#f9fafd',
-                  shadowColor: '#f9fafd',
-                  elevation: 0,
-                },
-                headerLeft: () => (
-                  <View style={{marginLeft: 10}}>
-                    <FontAwesome.Button 
-                      name="long-arrow-left"
-                      size={25}
-                      backgroundColor="#f9fafd"
-                      color="#333"
-                      onPress={() => navigation.navigate('Home')}
-                    />
-                  </View>
-                ),
-              })}
+            options={{headerShown: false}}
           />
           <Stack.Screen
             name="Locations"

@@ -14,14 +14,14 @@ const OnboardingScreen = ({navigation}) => {
                 backgroundColor: "#fff",
                 image: <Image source={require('../assets/onboarding-img1.jpg')}/>,
                 title: "Onboarding 1",
-                subtitle: "Done with react native onboarding swiper",
+                subtitle: "Use this app to find climbing gyms near you",
             },
 
             {
                 backgroundColor: "#fff",
                 image: <Image source={require('../assets/onboarding-img3.jpg')}/>,
                 title: "Onboarding 3",
-                subtitle: "Done with react native onboarding swiper"
+                subtitle: "Placeholder text goes here"
             },
             
         ]}
