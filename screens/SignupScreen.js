@@ -40,7 +40,7 @@ const SignupScreen = ({navigation}) => {
                 <TouchableOpacity onPress={()=>alert('Soul sold!')}><Text style={[styles.colorTextPrivate,{color: '#e88832'}]}>Terms of Serivce</Text></TouchableOpacity>
             </View>
             <TouchableOpacity style={styles.forgotButton} onPress={()=> {navigation.navigate("Login")}}>
-                <Text style={styles.navButtonText}>Have an account? Sign in</Text>
+                <Text style={styles.navButtonText}>Have an account? <Text style={styles.linkButtonText}>Sign in</Text></Text>
             </TouchableOpacity>
         </View>
 
@@ -67,9 +67,14 @@ const styles = StyleSheet.create({
     navButtonText:{
         fontSize: 18,
         fontWeight: '500',
-        color: '#2e64e5',
+        color: '#000000',
         
 
+    },
+    linkButtonText:{
+        fontSize: 18,
+        fontWeight:'500',
+        color: "#2e64e5"
     },
     colorTextPrivate:{
         fontSize: 13,

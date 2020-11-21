@@ -8,6 +8,7 @@ import {
   Image,
   Dimensions,
   TouchableOpacity,
+  Linking
 } from "react-native";
 
 import MapView, {PROVIDER_GOOGLE, animateToRegion} from "react-native-maps";;
@@ -25,7 +26,12 @@ const Images = [
   { uri: "https://imgur.com/6WS7zsT.jpg" }
 
 ]
-
+const Links = [
+  "https://www.boulderkeskus.com/fi/sivu/hallit/Espoo",// [0]
+  "https://kiipeilyareena.com/kalasatama/", // [1]
+  "https://kiipeilyareena.com/salmisaari-seinakiipeily/",// [2]
+  "https://www.boulderkeskus.com/en/sivu/gyms/herttoniemi/"// [3]
+]
 
 
 export default class LocationsScreen extends Component{
@@ -43,7 +49,7 @@ export default class LocationsScreen extends Component{
                 title: "Espoo",
                 description:"Boulderkeskus Espoo",
                 image: Images[0],//IMAGE HERE
-                    
+                link: Links[0]    
                 },
                 {
                 coordinate:{
@@ -54,7 +60,7 @@ export default class LocationsScreen extends Component{
                 title: "Kalasatama",
                 description:"Kalastaman Kiipeilyareena",
                 image: Images[1],//IMAGE HERE
-                        
+                link: Links[1]  
                 },  
                 {
                     coordinate:{
@@ -65,7 +71,7 @@ export default class LocationsScreen extends Component{
                 title: "Salmisaari",
                 description:"Salmisaaren Kiipeilyareena",
                 image: Images[2],//IMAGE HERE
-                    
+                link: Links[2]    
                 },  
                 {
                     coordinate:{
@@ -76,7 +82,7 @@ export default class LocationsScreen extends Component{
                 title: "Herttoniemi",
                 description:"Boulderkeskus Herttoniemi",
                 image: Images[3],//IMAGE HERE
-                    
+                link: Links[3] 
                 },  
             ],     
             region:{
@@ -86,7 +92,6 @@ export default class LocationsScreen extends Component{
                 longitudeDelta: 0.050142817690068,
             },  
         };
-
         render() {
           this.index = 0;
           this.animation = new Animated.Value(0);
@@ -188,6 +193,7 @@ export default class LocationsScreen extends Component{
               >
                 {this.state.markers.map((marker, index) => (
                   <TouchableOpacity style={styles.card} key={index}
+                  onPress={()=> {Linking.openURL(marker.link)}}
                   >
                     <Image
                       source={marker.image}

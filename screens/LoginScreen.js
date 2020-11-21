@@ -43,21 +43,24 @@ const LoginScreen = ({navigation}) => {
                 onPress={()=>login(email,password)}
             />
 
-            <TouchableOpacity style={styles.forgotButton} onPress={()=> {navigation.navigate('Signup')}}>
-                <Text style={styles.navButtonText}>Forgot Password?</Text>
-            </TouchableOpacity>
-            <View>
+            
+           
                 
             <GoogleSigninButton
-                style={{ width: 192, height: 48 }}
+                style={{ width: 250, height: 58, marginTop:30, marginBottom: 50 }}
                 size={GoogleSigninButton.Size.Wide}
                 color={GoogleSigninButton.Color.Light}
                 onPress={()=>googleLogin()}
             /> 
-            </View>
-            <TouchableOpacity style={styles.forgotButton} onPress={()=> {navigation.navigate("Signup")}}>
-                <Text style={styles.navButtonText}>Dont have an account? Click Here</Text>
+            
+            
+            <TouchableOpacity style={styles.forgotButton} onPress={()=> {navigation.navigate('ForgotPassword')}}>
+                <Text style={styles.navButtonText}>Forgot Password? <Text style={styles.linkButtonText}>Click here</Text></Text>
             </TouchableOpacity>
+            <TouchableOpacity style={styles.forgotButton} onPress={()=> {navigation.navigate("Signup")}}>
+                <Text style={styles.navButtonText}>Dont have an account?<Text style={styles.linkButtonText}> Click Here</Text></Text>
+            </TouchableOpacity>
+           
         </View>
 
     );
@@ -68,6 +71,7 @@ export default LoginScreen;
 const styles = StyleSheet.create({
     container:{
         flex:1,
+        flexDirection:'column',
         alignItems: "center",
         justifyContent: "center"
     },
@@ -79,16 +83,23 @@ const styles = StyleSheet.create({
     text:{
         fontSize: 20,
         marginBottom: 10,
-        color: "#051d5f",
+        color: "#000000",
 
     },
     navButton:{
         marginTop: 15,
     },
     forgotButton:{
-        marginVertical: 35,
+        marginVertical: 15,
     },
     navButtonText:{
+        fontSize: 18,
+        fontWeight: '500',
+        color: '#000000',
+        
+
+    },
+    linkButtonText:{
         fontSize: 18,
         fontWeight: '500',
         color: '#2e64e5',

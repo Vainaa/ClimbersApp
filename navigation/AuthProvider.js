@@ -2,7 +2,9 @@ import React, {createContext, useState} from 'react';
 import auth from '@react-native-firebase/auth';
 import { GoogleSignin } from '@react-native-community/google-signin';
 
+
 export const AuthContext = createContext();
+
 
 export const AuthProvider = ({children}) => {
   const [user, setUser] = useState(null);
@@ -32,6 +34,15 @@ export const AuthProvider = ({children}) => {
             console.log({error});
           }
         },
+        passwordReset: async (email) => {
+          try{
+            auth().sendPasswordResetEmail(email);
+          }
+          catch(e){
+            console.log(e);
+          }
+        },
+        
         register: async (email, password) => {
           try {
             await auth().createUserWithEmailAndPassword(email, password);
