@@ -48,6 +48,7 @@ export const AuthProvider = ({children}) => {
             await auth().createUserWithEmailAndPassword(email, password);
           } catch (e) {
             console.log(e);
+            alert(e);
           }
         },
         logout: async () => {
