@@ -69,7 +69,25 @@ const AuthStack = () => {
           <Stack.Screen
             name="Locations"
             component={LocationsScreen}
-            opotions={{header: () => null}}
+            options={({navigation}) => ({
+              title: '',
+              headerStyle: {
+                backgroundColor: '#f9fafd',
+                shadowColor: '#f9fafd',
+                elevation: 0,
+              },
+              headerLeft: () => (
+                <View style={{marginLeft: 10}}>
+                  <FontAwesome.Button 
+                    name="long-arrow-left"
+                    size={25}
+                    backgroundColor="#f9fafd"
+                    color="#333"
+                    onPress={() => navigation.navigate('Home')}
+                  />
+                </View>
+              ),
+            })}
           />
           <Stack.Screen
             name="Signup"
