@@ -19,6 +19,7 @@ export const AuthProvider = ({children}) => {
             await auth().signInWithEmailAndPassword(email, password);
           } catch (e) {
             console.log(e);
+            alert(e);
           }
         },
         googleLogin: async () => {
@@ -32,6 +33,7 @@ export const AuthProvider = ({children}) => {
             await auth().signInWithCredential(googleCredential);
           } catch(error) {
             console.log({error});
+            alert(error);
           }
         },
         passwordReset: async (email) => {
@@ -40,6 +42,7 @@ export const AuthProvider = ({children}) => {
           }
           catch(e){
             console.log(e);
+            alert(e);
           }
         },
         
@@ -56,6 +59,7 @@ export const AuthProvider = ({children}) => {
             await auth().signOut();
           } catch (e) {
             console.log(e);
+            alert(e);
           }
         },
       }}>
