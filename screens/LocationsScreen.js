@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -8,16 +8,22 @@ import {
   Image,
   Dimensions,
   TouchableOpacity,
-  Linking
+  Linking,
+  Button, 
+  Alert,
+  Modal,
+  TouchableHighlight,
 } from "react-native";
 
-import MapView, {PROVIDER_GOOGLE, animateToRegion} from "react-native-maps";;
-
+import MapView, {PROVIDER_GOOGLE, animateToRegion, Marker} from "react-native-maps";;
+import FormInput from '../components/FormInput';
+import TextArea from "../components/TextArea";
+import {windowHeight} from '../utils/Dimensions';
+import Icon from '../components/Icon';
 
 const {width, height} = Dimensions.get("window");
 const CARD_HEIGHT = height / 4;
 const CARD_WIDTH = CARD_HEIGHT -50;
-
 const Images = [
 
   { uri: "https://imgur.com/RbLtTsz.png" },
@@ -32,14 +38,47 @@ const Links = [
   "https://kiipeilyareena.com/salmisaari-seinakiipeily/",// [2]
   "https://www.boulderkeskus.com/en/sivu/gyms/herttoniemi/"// [3]
 ]
-
+let location = null;
 
 export default class LocationsScreen extends Component{
-       
-   
+
+  displayModal(show){
+    this.setState({isVisible: show})
+  }
+  constructor(props){
+    super(props);
+    this.handlePress = this.handlePress.bind(this);
+  }
+  updateCardTitle = (title) =>{
+    this.setState({
+     cardTitle:title,
+    })
+ }
+ updateCardDesc = (desc) =>{
+    this.setState({
+     cardDesc:desc,
+    })
+  }
+  saveLocation=(e)=>{
+    location=e.nativeEvent.coordinate;
+    this.displayModal(true)
+  }
+  handlePress(){   
     
-    state={
-        markers: [
+    this.setState({
+      markers:[
+        ...this.state.markers,{
+          title: this.state.cardTitle,
+          description:this.state.cardDesc,
+          coordinate:location,    
+          image: {uri: "https://via.placeholder.com/150"}
+        }
+      ]
+    }) 
+  }   
+  state={
+        isVisible: false,
+        markers: [        
             {
                 coordinate:{
                     latitude:60.166005, 
@@ -91,7 +130,7 @@ export default class LocationsScreen extends Component{
                 latitudeDelta: 0.05864195044303443,
                 longitudeDelta: 0.050142817690068,
             },  
-        };
+  };
         render() {
           this.index = 0;
           this.animation = new Animated.Value(0);
@@ -103,7 +142,6 @@ export default class LocationsScreen extends Component{
             if (index <= 0) {
               index = 0;
             }
-      
             clearTimeout(this.regionTimeout);
             this.regionTimeout = setTimeout(() => {
               if (this.index !== index) {
@@ -138,7 +176,6 @@ export default class LocationsScreen extends Component{
             });
             return { scale, opacity };
           });
-      
           return (
             <View style={styles.container}>
               <MapView.Animated
@@ -147,10 +184,10 @@ export default class LocationsScreen extends Component{
                 style={styles.container}
                 showsUserLocation
                 provider={PROVIDER_GOOGLE}
-
+                onLongPress={this.saveLocation}
                
               >
-                {this.state.markers.map((marker, index) => {
+                {this.state.markers.map((marker, index) => {                 
                   const scaleStyle = {
                     transform: [
                       {
@@ -168,9 +205,57 @@ export default class LocationsScreen extends Component{
                         <View style={styles.marker} />
                       </Animated.View>
                     </MapView.Marker>
+                    
                   );
                 })}
               </MapView.Animated>
+              <Modal 
+                animationType = {"slide"}
+                transparent={false}
+                visible={this.state.isVisible}
+                onRequestClose={() => {
+                  this.displayModal(!this.state.isVisible);
+                }}>
+                <TouchableOpacity
+                  onPress={() => {
+                    this.displayModal(!this.state.isVisible);
+                  }}>
+                  <Icon iconType="arrowleft"/>
+                </TouchableOpacity>
+                <View style={styles.modalContainer}>
+                <Text style={{fontSize:25, marginTop:-0}}>Create new location</Text>
+                <Image
+                  source={require('../assets/onboarding-img3.png')}
+                  style={styles.logo}
+                />
+                  
+                  <Text style={styles.text}>Location Name</Text>
+                  
+                <FormInput
+                iconType="edit"
+                autoCapitalize="none"
+                autoCorrect={false}
+                onChangeText={(title) => this.updateCardTitle(title)}
+                value={this.state.cardTitle}               
+                />
+                <Text style={styles.text}>Description</Text>
+                <TextArea
+                numberOfLines={50}
+                autoCorrect={false}
+                onChangeText={(title) => this.updateCardDesc(title)}
+                value={this.state.cardDesc}               
+                />
+                <View style={styles.buttonContainer}>
+                  <Text style={styles.closeText}
+                    onPress={() => {
+                      this.handlePress();
+                      this.displayModal(!this.state.isVisible);}
+                    }> Save
+                  </Text>
+                </View>
+                
+                </View>
+              </Modal>
               <Animated.ScrollView
                 horizontal
                 scrollEventThrottle={1}
@@ -211,12 +296,19 @@ export default class LocationsScreen extends Component{
               </Animated.ScrollView>
             </View>
           );
+          
         }
       }
       
       const styles = StyleSheet.create({
         container: {
           flex: 1,
+        },
+        modalContainer:{
+          flex:1,       
+          flexDirection: "column",
+          justifyContent:"center",
+          alignItems: "center",
         },
         scrollView: {
           position: "absolute",
@@ -250,6 +342,9 @@ export default class LocationsScreen extends Component{
         textContent: {
           flex: 1,
         },
+        desc:{
+          height: 50,
+        },
         cardtitle: {
           fontSize: 12,
           marginTop: 5,
@@ -278,4 +373,38 @@ export default class LocationsScreen extends Component{
           borderWidth: 1,
           borderColor: "rgba(130,4,150, 0.5)",
         },
+        closeText: {
+          fontSize: 24,
+          color: '#00479e',
+          textAlign: 'center',
+        },
+        text:{
+          fontSize:20,
+          color:"#000000",
+          marginTop: 10,
+          width: '100%',
+          height: windowHeight / 15,
+          backgroundColor: '#F2d338',
+          padding: 10,
+          textAlign: 'center',
+          justifyContent: 'center',
+          borderRadius: 3,
+          fontWeight:"bold"
+      },
+      buttonContainer: {
+        marginTop: 10,
+        width: '40%',
+        height: windowHeight / 15,
+        backgroundColor: '#F2d338',
+        padding: 10,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: 3,
+      },
+      logo:{
+        height: 150,
+        width: 150,
+        resizeMode: 'cover',
+        margin:20
+    },
       });

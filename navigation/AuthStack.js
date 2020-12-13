@@ -5,6 +5,7 @@ import LoginScreen from '../screens/LoginScreen';
 import SplashScreen from '../screens/SplashScreen';
 import OnboardingScreen from '../screens/OnboardingScreen';
 import LocationsScreen from '../screens/LocationsScreen';
+import customLocation from '../screens/customLocation';
 import HomeScreen from '../screens/HomeScreen';
 import ForgotPassword from '../screens/ForgotPassword';
 import { createStackNavigator } from "@react-navigation/stack";
@@ -60,6 +61,29 @@ const AuthStack = () => {
             name="Home"
             component={HomeScreen}
             options={{header: () => null}}
+          />
+          <Stack.Screen
+            name="Custom Location"
+            component={customLocation}
+            options={({navigation}) => ({
+              title: '',
+              headerStyle: {
+                backgroundColor: '#f9fafd',
+                shadowColor: '#f9fafd',
+                elevation: 0,
+              },
+              headerLeft: () => (
+                <View style={{marginLeft: 10}}>
+                  <FontAwesome.Button 
+                    name="long-arrow-left"
+                    size={25}
+                    backgroundColor="#f9fafd"
+                    color="#333"
+                    onPress={() => navigation.navigate('Locations')}
+                  />
+                </View>
+              ),
+            })}
           />
           <Stack.Screen
             name="Login"

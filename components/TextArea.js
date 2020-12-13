@@ -4,18 +4,13 @@ import {View, TextInput, Button, StyleSheet} from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { windowHeight, windowWidth } from '../utils/Dimensions';
 
-const FormInput = ({labelValue, placeholderText, iconType, ...rest}) => {
+const TextArea = ({labelValue, placeholderText, iconType, ...rest}) => {
     return (
             <View style={styles.inputContainer}>
-                <View style={styles.iconStyle}>
-                    <AntDesign name={iconType} size={25} color ="#666"/>
-                </View>
-                
                 <TextInput
                     name={labelValue}
                     style={styles.input}
-                    numberOfLines={1}
-                    multiline={true}
+                    numberOfLines={10}
                     placeholder={placeholderText}
                     placeholderTextColor="#666"
                     {...rest}
@@ -24,14 +19,14 @@ const FormInput = ({labelValue, placeholderText, iconType, ...rest}) => {
     );
 }
 
-export default FormInput;
+export default TextArea;
 
 const styles = StyleSheet.create({
     inputContainer: {
       marginTop: 5,
       marginBottom: 10,
       width: '100%',
-      height: windowHeight / 15,
+      height: windowHeight / 5,
       borderColor: '#ccc',
       borderRadius: 3,
       borderWidth: 1,
