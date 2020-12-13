@@ -15,7 +15,7 @@ import {
   TouchableHighlight,
 } from "react-native";
 
-import MapView, {PROVIDER_GOOGLE, animateToRegion, Marker} from "react-native-maps";;
+import MapView, {PROVIDER_GOOGLE, animateToRegion, Marker} from "react-native-maps";
 import FormInput from '../components/FormInput';
 import TextArea from "../components/TextArea";
 import {windowHeight} from '../utils/Dimensions';
@@ -53,8 +53,8 @@ export default class LocationsScreen extends Component{
     this.setState({
      cardTitle:title,
     })
- }
- updateCardDesc = (desc) =>{
+  }
+  updateCardDesc = (desc) =>{
     this.setState({
      cardDesc:desc,
     })
@@ -178,34 +178,18 @@ export default class LocationsScreen extends Component{
           });
           return (
             <View style={styles.container}>
+              <Text style={{fontSize:20,fontWeight:"bold", textAlign:"center"}}>Hold to add custom location</Text>
               <MapView.Animated
                 ref={map => this.map = map}
                 initialRegion={this.state.region}
                 style={styles.container}
                 showsUserLocation
                 provider={PROVIDER_GOOGLE}
-                onLongPress={this.saveLocation}
-               
+                onLongPress={this.saveLocation}        
               >
                 {this.state.markers.map((marker, index) => {                 
-                  const scaleStyle = {
-                    transform: [
-                      {
-                        scale: interpolations[index].scale,
-                      },
-                    ],
-                  };
-                  const opacityStyle = {
-                    opacity: interpolations[index].opacity,
-                  };
                   return (
-                    <MapView.Marker key={index} coordinate={marker.coordinate}>
-                      <Animated.View style={[styles.markerWrap, opacityStyle]}>
-                        <Animated.View style={[styles.ring, scaleStyle]} />
-                        <View style={styles.marker} />
-                      </Animated.View>
-                    </MapView.Marker>
-                    
+                    <MapView.Marker key={index} coordinate={marker.coordinate}/>
                   );
                 })}
               </MapView.Animated>
@@ -353,25 +337,6 @@ export default class LocationsScreen extends Component{
         cardDescription: {
           fontSize: 12,
           color: "#444",
-        },
-        markerWrap: {
-          alignItems: "center",
-          justifyContent: "center",
-        },
-        marker: {
-          width: 16,
-          height: 16,
-          borderRadius: 8,
-          backgroundColor: "rgba(130,4,150, 0.9)",
-        },
-        ring: {
-          width: 48,
-          height: 48,
-          borderRadius: 24,
-          backgroundColor: "rgba(130,4,150, 0.3)",
-          position: "absolute",
-          borderWidth: 1,
-          borderColor: "rgba(130,4,150, 0.5)",
         },
         closeText: {
           fontSize: 24,

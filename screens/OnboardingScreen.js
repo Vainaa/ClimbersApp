@@ -13,15 +13,15 @@ const OnboardingScreen = ({navigation}) => {
             {
                 backgroundColor: "#fff",
                 image: <Image source={require('../assets/onboarding-img1.png') }style={styles.logo}/>,
-                title: "Onboarding 1",
+                title: "",
                 subtitle: "Use this app to find climbing gyms near you",
             },
 
             {
                 backgroundColor: "#fff",
                 image: <Image source={require('../assets/onboarding-img3.png')}/>,
-                title: "Onboarding 3",
-                subtitle: "Placeholder text goes here"
+                title: "",
+                subtitle: "You can also add your own locations"
             },
             
         ]}

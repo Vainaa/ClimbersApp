@@ -1,17 +1,19 @@
 
 import React from 'react';
-import {Text, TouchableOpacity, StyleSheet} from 'react-native';
+import {Text, TouchableOpacity, StyleSheet,ImageBackground} from 'react-native';
 import {windowHeight, windowWidth} from '../utils/Dimensions';
 
-const FormButton = ({buttonTitle, ...rest}) => {
+const MenuButton = ({buttonTitle, ...rest}) => {
   return (
     <TouchableOpacity style={styles.buttonContainer} {...rest}>
+    <ImageBackground source={require('../assets/mapIcon.png/')} style={styles.backgroundImage}>
       <Text style={styles.buttonText}>{buttonTitle}</Text>
+    </ImageBackground>
     </TouchableOpacity>
   );
 };
 
-export default FormButton;
+export default MenuButton;
 
 const styles = StyleSheet.create({
   buttonContainer: {
@@ -24,6 +26,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 3,
+
   },
   buttonText: {
     fontSize: 20,
@@ -31,5 +34,12 @@ const styles = StyleSheet.create({
     color: '#000000',
     fontFamily: 'Lato-Regular',
   },
-
+  backgroundImage:{
+    flex:1,
+    justifyContent:"center",
+    resizeMode: "cover",
+    width:"100%",
+    justifyContent:"center",
+    
+},
 });
