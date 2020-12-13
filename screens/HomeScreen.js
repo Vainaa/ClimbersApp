@@ -21,14 +21,23 @@ const HomeScreen=({navigation})=> {
             </View>
             
                 
-            <View style={{flexDirection:"row", justifyContent:"center",marginBottom:"-120%"}}>
-                
-                <FormButton style={styles.card}
-                
-                    buttonTitle="Locations" onPress={()=> {navigation.navigate("Locations")}}
+            <View style={{flexDirection:"row", justifyContent:"center",marginBottom:"-60%"}}>
+                <FormButton style={styles.card} 
+                buttonTitle="Contact" onPress={()=> {navigation.navigate("Contact")}}
                 />
                 <FormButton style={styles.card}
                     buttonTitle="Logout" onPress={()=> logout()}
+                />
+                
+            </View>
+            <View style={{flexDirection:"row", justifyContent:"center",marginBottom:"-50%"}}>
+                <FormButton style={styles.card}
+            
+                buttonTitle="Locations" onPress={()=> {navigation.navigate("Locations")}}
+                />
+                
+                <FormButton style={styles.card}
+                    buttonTitle="About" onPress={()=> {navigation.navigate("About")}}
                 />
             </View>
            
@@ -54,7 +63,7 @@ const styles = StyleSheet.create({
         height: windowHeight / 15,
         backgroundColor: '#F2d338',
         padding: 15,
-        marginTop: "-140%",
+        marginTop: "-120%",
         textAlign:'center',
         alignItems: 'center',
         justifyContent: 'center',
